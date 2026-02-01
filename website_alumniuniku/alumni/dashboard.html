@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Alumni</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-4">
+  <script>
+const status = localStorage.getItem("alumni_status");
+
+if (status === "Verified") {
+  window.location.href = "../index.html";
+}
+</script>
+  <div class="d-flex justify-content-between mb-3">
+    <h4>Dashboard Alumni</h4>
+    <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="alert alert-info">
+    Halo, <b id="namaUser"></b><br>
+    Lengkapi profil untuk bisa melamar lowongan kerja
+  </div>
+
+  <!-- FORM PROFIL -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      Profil Alumni
+    </div>
+
+    <div class="card-body">
+      <div class="mb-2">
+        <label class="form-label">Nama Lengkap</label>
+        <input id="nama" class="form-control">
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Email</label>
+        <input id="email" class="form-control" disabled>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Program Studi</label>
+        <input id="program" class="form-control" placeholder="Contoh: Teknik Informatika">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Tahun Lulus</label>
+        <input id="tahun" type="number" class="form-control" placeholder="2024">
+      </div>
+
+      <button class="btn btn-success w-100" onclick="simpan()">
+        Simpan Profil
+      </button>
+
+      <p id="msg" class="mt-3 fw-bold"></p>
+    </div>
+  </div>
+
+</div>
+
+<script src="../js/auth.js"></script>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbyDS1ml_xKj_1BAvS6_eD9sMbbYDShc3IFUtONn4jV117sDkHgr1TkxhjFm-DF1FqjAVw/exec";
+
+// isi data dari login
+document.getElementById("namaUser").innerText =
+  localStorage.getItem("nama");
+
+document.getElementById("nama").value =
+  localStorage.getItem("nama");
+
+document.getElementById("email").value =
+  localStorage.getItem("email");
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "../index.html";
+}
+
+async function simpan() {
+
+  const form = new FormData();
+  form.append("action", "addAlumni");
+  form.append("nama", nama.value);
+  form.append("email", email.value);
+  form.append("program_studi", program.value);
+  form.append("tahun", tahun.value);
+
+  try {
+    await fetch(API, {
+      method: "POST",
+      body: form
+    });
+
+    // SIMPAN KE LOCAL STORAGE
+    localStorage.setItem("program_studi", program.value);
+    localStorage.setItem("tahun", tahun.value);
+    localStorage.setItem("alumni_status", "Pending");
+
+    msg.style.color = "green";
+    msg.innerText = "Data berhasil dikirim. Menunggu verifikasi admin.";
+
+  } catch (err) {
+    msg.style.color = "red";
+    msg.innerText = "Gagal mengirim data";
+  }
+}
+</script>
+
+</body>
+</html>
