@@ -548,3 +548,58 @@ html {
   }
 
 }
+
+/* =========================
+   HERO MOBILE FINAL RAPI
+========================= */
+@media (max-width: 768px) {
+
+  .hero {
+    position: relative;
+    padding: 40px 16px;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-content {
+    width: 78%;
+    padding: 22px 20px;
+    border-radius: 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  /* ===== gambar orang ===== */
+  .hero-decor {
+    position: absolute;
+    right: -10px;
+    bottom: 40px;
+
+    width: 150px;
+    height: auto;
+
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* search */
+  .search-box {
+    margin-top: 16px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .search-box button {
+    font-size: 14px;
+  }
+}
